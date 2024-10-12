@@ -2509,21 +2509,17 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			Keybind.KeybindFrame.Size = UDim2.new(0, Keybind.KeybindFrame.KeybindBox.TextBounds.X + 24, 0, 30)
 
 			Keybind.KeybindFrame.KeybindBox.Focused:Connect(function()
-				print("Connected")
 				if KeybindSettings.Locked then
-					print("Is Locked")
 					Keybind.KeybindFrame.KeybindBox:ReleaseFocus() return
 				end
-				print("Isn't Locked")
 				CheckingForKey = true
 				Keybind.KeybindFrame.KeybindBox.Text = ""
 			end)
 			Keybind.KeybindFrame.KeybindBox.FocusLost:Connect(function()
-				print("Released")
+				wait(0.2)
 				CheckingForKey = false
 				if Keybind.KeybindFrame.KeybindBox.Text == nil then
 					Keybind.KeybindFrame.KeybindBox.Text = KeybindSettings.CurrentKeybind
-					print("Reverting")
 					SaveConfiguration()
 				end
 			end)
@@ -2539,24 +2535,18 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			UserInputService.InputBegan:Connect(function(input, processed)
 
 				if CheckingForKey then
-					print("Is Checking Input")
 					if input.KeyCode ~= Enum.KeyCode.Unknown and input.KeyCode ~= Enum.KeyCode.RightShift and input.KeyCode ~= Enum.KeyCode.Escape and not processed then
-						print("Saving Key")
 						local SplitMessage = string.split(tostring(input.KeyCode), ".")
 						local NewKeyNoEnum = SplitMessage[3]
-						print(NewKeyNoEnum)
 						Keybind.KeybindFrame.KeybindBox.Text = tostring(NewKeyNoEnum)
 						KeybindSettings.CurrentKeybind = tostring(NewKeyNoEnum)
 						Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
 						SaveConfiguration()
-						print("Key Saved")
 					elseif input.KeyCode == Enum.KeyCode.Escape and not processed then
-						print("Removing Key")
 						Keybind.KeybindFrame.KeybindBox.Text = ""
 						KeybindSettings.CurrentKeybind = ""
 						Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
 						SaveConfiguration()
-						print("Key Saved")
 					end
 				elseif (KeybindSettings.CurrentKeybind ~= nil and KeybindSettings.CurrentKeybind ~= "") and not processed and (input.KeyCode == Enum.KeyCode[KeybindSettings.CurrentKeybind]) then  --Test
 					local Held = true
