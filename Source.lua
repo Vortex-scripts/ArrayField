@@ -2542,7 +2542,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 						Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
 						SaveConfiguration()
 					end
-				elseif KeybindSettings.CurrentKeybind ~= nil and (input.KeyCode == Enum.KeyCode[KeybindSettings.CurrentKeybind] and not processed) then  --Test
+				elseif (KeybindSettings.CurrentKeybind ~= nil and KeybindSettings.CurrentKeybind ~= "") and not processed and (input.KeyCode == Enum.KeyCode[KeybindSettings.CurrentKeybind]) then  --Test
 					local Held = true
 					local Connection
 					Connection = input.Changed:Connect(function(prop)
@@ -2569,12 +2569,18 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 						if Held then
 							local Loop; Loop = RunService.Stepped:Connect(function()
 								if not Held then
-									KeybindSettings.Callback(false) -- maybe pcall this
-									Loop:Disconnect()
+									local Success, Response = pcall(function()
+										KeybindSettings.Callback(false) -- maybe pcall this
+										Loop:Disconnect()
+									end)	
+									if not Success then print("ArrayField | "..KeybindSettings.Name.." Callback Error " ..tostring(Response)) end
 								else
-									KeybindSettings.Callback(true) -- maybe pcall this
+									local Success, Response = pcall(function()
+										KeybindSettings.Callback(true) -- maybe pcall this
+									end)
+									if not Success then print("ArrayField | "..KeybindSettings.Name.." Callback Error" ..tostring(Response)) end
 								end
-							end)	
+							end)		
 						end
 					end
 				end
