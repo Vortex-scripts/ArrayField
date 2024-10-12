@@ -16,7 +16,7 @@ local Release = "Release 2A"
 local NotificationDuration = 6.5
 local ArrayFieldFolder = "ArrayField"
 local ConfigurationFolder = ArrayFieldFolder.."/Configurations"
-local ConfigurationExtension = ".rfld"
+local ConfigurationExtension = ".txt"
 local ArrayFieldQuality = {}
 
 local ArrayFieldLibrary = {
@@ -1218,8 +1218,6 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			end	
 		end
 	end)
-
-	if not s then print(e) end
 
 	AddDraggingFunctionality(Topbar,Main)
 
