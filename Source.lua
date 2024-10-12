@@ -835,7 +835,7 @@ function Hide()
 		spawn(CloseSideBar)
 	end
 	spawn(function()
-		FadeDescription(nil,true)
+		FadeDescription(nil,nil,true)
 	end)
 	Debounce = true
 	ArrayFieldLibrary:Notify({Title = "Interface Hidden", Content = "The interface has been hidden, you can unhide the interface by tapping RightShift", Duration = 7})
@@ -1126,7 +1126,7 @@ function Minimise()
 		spawn(CloseSideBar)
 	end
 	spawn(function()
-		FadeDescription(nil,true)
+		FadeDescription(nil,nil,true)
 	end)
 	for _, tabbtn in ipairs(TopList:GetChildren()) do
 		if tabbtn.ClassName == "Frame" and tabbtn.Name ~= "Placeholder" then
@@ -2509,16 +2509,21 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			Keybind.KeybindFrame.Size = UDim2.new(0, Keybind.KeybindFrame.KeybindBox.TextBounds.X + 24, 0, 30)
 
 			Keybind.KeybindFrame.KeybindBox.Focused:Connect(function()
+				print("Connected")
 				if KeybindSettings.Locked then
+					print("Is Locked")
 					Keybind.KeybindFrame.KeybindBox:ReleaseFocus() return
 				end
+				print("Isn't Locked")
 				CheckingForKey = true
 				Keybind.KeybindFrame.KeybindBox.Text = ""
 			end)
 			Keybind.KeybindFrame.KeybindBox.FocusLost:Connect(function()
+				print("Released")
 				CheckingForKey = false
 				if Keybind.KeybindFrame.KeybindBox.Text == nil then
 					Keybind.KeybindFrame.KeybindBox.Text = KeybindSettings.CurrentKeybind
+					print("Reverting")
 					SaveConfiguration()
 				end
 			end)
@@ -2535,6 +2540,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 
 				if CheckingForKey then
 					if input.KeyCode ~= Enum.KeyCode.Unknown and input.KeyCode ~= Enum.KeyCode.RightShift and input.KeyCode ~= Enum.KeyCode.Escape and not processed then
+						print("Saving Key")
 						local SplitMessage = string.split(tostring(input.KeyCode), ".")
 						local NewKeyNoEnum = SplitMessage[3]
 						print(NewKeyNoEnum)
@@ -2542,11 +2548,14 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 						KeybindSettings.CurrentKeybind = tostring(NewKeyNoEnum)
 						Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
 						SaveConfiguration()
+						print("Key Saved")
 					elseif input.KeyCode == Enum.KeyCode.Escape and not processed then
+						print("Removing Key")
 						Keybind.KeybindFrame.KeybindBox.Text = ""
 						KeybindSettings.CurrentKeybind = ""
 						Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
 						SaveConfiguration()
+						print("Key Saved")
 					end
 				elseif (KeybindSettings.CurrentKeybind ~= nil and KeybindSettings.CurrentKeybind ~= "") and not processed and (input.KeyCode == Enum.KeyCode[KeybindSettings.CurrentKeybind]) then  --Test
 					local Held = true
