@@ -15,8 +15,9 @@ Arrays  | Designing + Programming + New Features
 local Release = "Release 2A"
 local NotificationDuration = 6.5
 local ArrayFieldFolder = "ArrayField"
-local ConfigurationFolder = ArrayFieldFolder.."/Configurations"
-local ConfigurationExtension = ".txt"
+local DefaultConfigurationFolder = ArrayFieldFolder.."/Configurations"
+local ConfigurationFolder = nil
+local ConfigurationExtension = ".rfld"
 local ArrayFieldQuality = {}
 
 local ArrayFieldLibrary = {
@@ -1200,7 +1201,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 	LoadingFrame.Visible = true
 
 
-	local s, e = pcall(function()
+	pcall(function()
 		if not Settings.ConfigurationSaving.FileName then
 			Settings.ConfigurationSaving.FileName = tostring(game.PlaceId)
 		end
@@ -1209,7 +1210,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			Settings.ConfigurationSaving.Enabled = false
 		end
 		CFileName = Settings.ConfigurationSaving.FileName
-		ConfigurationFolder = Settings.ConfigurationSaving.FolderName or ConfigurationFolder
+		ConfigurationFolder = Settings.ConfigurationSaving.FolderName or DefaultConfigurationFolder
 		CEnabled = Settings.ConfigurationSaving.Enabled
 
 		if Settings.ConfigurationSaving.Enabled then
