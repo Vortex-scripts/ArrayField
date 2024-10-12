@@ -1196,11 +1196,11 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 		LoadingFrame.Version.Text = "Arrayfield UI"
 	end
 	Topbar.Visible = false
-	Elements.Visible = false
+	Elements.Visible = false 
 	LoadingFrame.Visible = true
 
 
-	pcall(function()
+	local s, e = pcall(function()
 		if not Settings.ConfigurationSaving.FileName then
 			Settings.ConfigurationSaving.FileName = tostring(game.PlaceId)
 		end
@@ -1218,6 +1218,8 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			end	
 		end
 	end)
+
+	if not s then print(e) end
 
 	AddDraggingFunctionality(Topbar,Main)
 
