@@ -2539,6 +2539,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			UserInputService.InputBegan:Connect(function(input, processed)
 
 				if CheckingForKey then
+					print("Is Checking Input")
 					if input.KeyCode ~= Enum.KeyCode.Unknown and input.KeyCode ~= Enum.KeyCode.RightShift and input.KeyCode ~= Enum.KeyCode.Escape and not processed then
 						print("Saving Key")
 						local SplitMessage = string.split(tostring(input.KeyCode), ".")
