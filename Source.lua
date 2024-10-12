@@ -1204,9 +1204,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 		if not Settings.ConfigurationSaving.FileName then
 			Settings.ConfigurationSaving.FileName = tostring(game.PlaceId)
 		end
-		if not isfolder(ArrayFieldLibrary.."/".."Configuration Folders") then
 
-		end
 		if Settings.ConfigurationSaving.Enabled == nil then
 			Settings.ConfigurationSaving.Enabled = false
 		end
@@ -1941,7 +1939,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 		end
 
 		-- Paragraph
-		function Tab:CreateParagraph(ParagraphSettings,SectionParent)
+		function Tab:CreateParagraph(ParagraphSettings)
 			local ParagraphValue = {}
 
 			local Paragraph = Elements.Template.Paragraph:Clone()
@@ -1955,8 +1953,8 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 				element = Paragraph
 			}
 
-			if SectionParent or ParagraphSettings.SectionParent.Holder then
-				Paragraph.Parent = SectionParent.Holder or ParagraphSettings.SectionParent.Holder
+			if ParagraphSettings.SectionParent or ParagraphSettings.SectionParent.Holder then
+				Paragraph.Parent = ParagraphSettings.SectionParent.Holder or ParagraphSettings.SectionParent.Holder
 			else
 				Paragraph.Parent = TabPage
 			end
