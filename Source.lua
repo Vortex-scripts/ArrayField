@@ -2538,7 +2538,7 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 					print("Setting Key")
 					if input.KeyCode ~= Enum.KeyCode.Unknown and input.KeyCode ~= Enum.KeyCode.RightShift and input.KeyCode ~= Enum.KeyCode.Escape and not processed then
 						local SplitMessage = string.split(tostring(input.KeyCode), ".")
-						local NewKeyNoEnum = SplitMessage[3]
+						local NewKeyNoEnum = (SplitMessage[3]):gsub("^%l", string.upper)
 						print(NewKeyNoEnum)
 						Keybind.KeybindFrame.KeybindBox.Text = tostring(NewKeyNoEnum)
 						KeybindSettings.CurrentKeybind = tostring(NewKeyNoEnum)
