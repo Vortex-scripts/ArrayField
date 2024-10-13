@@ -2534,11 +2534,9 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			UserInputService.InputBegan:Connect(function(input, processed)
 				if CheckingForKey then
 					print("Setting Key")
-					local s, e = pcall(function()
-						print(input.KeyCode)
-					end)
+					print(input.KeyCode)
 					if not s then print(e) end
-					if input.KeyCode ~= Enum.KeyCode.Unknown and input.KeyCode ~= Enum.KeyCode.RightShift and input.KeyCode ~= Enum.KeyCode.Escape and not processed then
+					if input.KeyCode ~= Enum.KeyCode.Unknown and input.KeyCode ~= Enum.KeyCode.RightShift and input.KeyCode ~= Enum.KeyCode.Escape then
 						local SplitMessage = string.split(tostring(input.KeyCode), ".")
 						local NewKeyNoEnum = (SplitMessage[3]):gsub("^%l", string.upper)
 						print(NewKeyNoEnum)
@@ -2546,13 +2544,13 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 						KeybindSettings.CurrentKeybind = tostring(NewKeyNoEnum)
 						Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
 						SaveConfiguration()
-					elseif input.KeyCode == Enum.KeyCode.Escape and not processed then
+					elseif input.KeyCode == Enum.KeyCode.Escape then
 						Keybind.KeybindFrame.KeybindBox.Text = ""
 						KeybindSettings.CurrentKeybind = ""
 						Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
 						SaveConfiguration()
 					end
-				elseif (KeybindSettings.CurrentKeybind ~= nil and KeybindSettings.CurrentKeybind ~= "") and not processed and (input.KeyCode == Enum.KeyCode[KeybindSettings.CurrentKeybind]) then  --Test
+				elseif (KeybindSettings.CurrentKeybind ~= nil and KeybindSettings.CurrentKeybind ~= "") and (input.KeyCode == Enum.KeyCode[KeybindSettings.CurrentKeybind]) then  --Test
 					print("Running Callback")
 					local Held = true
 					local Connection
