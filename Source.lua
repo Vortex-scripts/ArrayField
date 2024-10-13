@@ -2516,7 +2516,6 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 				Keybind.KeybindFrame.KeybindBox.Text = ""
 			end)
 			Keybind.KeybindFrame.KeybindBox.FocusLost:Connect(function()
-				wait(0.2)
 				CheckingForKey = false
 				if Keybind.KeybindFrame.KeybindBox.Text == nil then
 					Keybind.KeybindFrame.KeybindBox.Text = KeybindSettings.CurrentKeybind
@@ -2535,7 +2534,10 @@ function ArrayFieldLibrary:CreateWindow(Settings)
 			UserInputService.InputBegan:Connect(function(input, processed)
 				if CheckingForKey then
 					print("Setting Key")
-					print(input.KeyCode)
+					local s, e = pcall(function()
+						print(input.KeyCode)
+					end)
+					if not s then print(e) end
 					if input.KeyCode ~= Enum.KeyCode.Unknown and input.KeyCode ~= Enum.KeyCode.RightShift and input.KeyCode ~= Enum.KeyCode.Escape and not processed then
 						local SplitMessage = string.split(tostring(input.KeyCode), ".")
 						local NewKeyNoEnum = (SplitMessage[3]):gsub("^%l", string.upper)
